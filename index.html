@@ -306,8 +306,12 @@
         .info-table td { padding: 15px 0; border-bottom: 1px solid var(--color-border); font-size: 0.9rem; }
         .info-table td small { display: block; color: #777; margin-top: 5px; font-size: 0.75rem; line-height: 1.5; }
 
+        /* 電話番号セルの調整 */
         .tel-cell-content {
-            display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
         .btn-policy-inline {
             color: var(--color-alert); border: 1px solid var(--color-alert); padding: 6px 14px;
@@ -316,8 +320,16 @@
         .btn-policy-inline:hover { background: var(--color-alert); color: #fff; }
 
         @media (max-width: 600px) {
-            .tel-cell-content { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .btn-policy-inline { width: 100%; text-align: center; padding: 10px; }
+            .tel-cell-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .btn-policy-inline {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
         }
 
         .icon-phone { fill: var(--color-accent); width: 1.1em; height: 1.1em; margin-right: 10px; vertical-align: middle; }
@@ -529,7 +541,12 @@
                     </table>
                 </div>
                 <div style="margin-bottom: 40px;">
-                    <p style="font-size: 0.9rem; margin-bottom: 15px; color: #555; text-align: center;">イオンモール鈴鹿から交差点を渡ってすぐ、斜め向かいに位置しています（徒歩約3分）。</p>
+                    <!-- ピンアイコン付きの一文 -->
+                    <p style="font-size: 0.9rem; margin-bottom: 15px; color: #555; text-align: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="var(--color-accent)" style="vertical-align: text-bottom; margin-right: 4px;">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>イオンモール鈴鹿から交差点を渡ってすぐ、斜め向かいに位置しています（徒歩約3分）。
+                    </p>
                     <div style="height: 400px; background: #f0f0f0;">
                         <iframe src="https://maps.google.com/maps?q=%E5%AE%B6%E6%97%8F%E4%BA%AD%20%E9%88%B4%E9%B9%BF%E5%BA%97&t=&z=17&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0; filter: grayscale(1);" allowfullscreen="" loading="lazy"></iframe>
                     </div>
@@ -608,7 +625,6 @@
             if(!container) return;
             const slides = container.querySelectorAll('.fade-slide');
             const dotContainer = document.getElementById(dotContainerId);
-            // キャプションコンテナが存在する場合、その中の要素を取得
             const captions = captionContainerId ? document.getElementById(captionContainerId).querySelectorAll('.slide-caption') : null;
             
             let current = 0; let timer = null;
