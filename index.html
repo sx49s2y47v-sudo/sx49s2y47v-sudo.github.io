@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新羅会館 家族亭 鈴鹿店 | 本場炭火焼肉と韓国料理</title>
-   
-<meta name="google-site-verification" content="gOAqLitRpOuBGQaMIPAP36l-Qi6Bn8mRpSjvmuLQLAk" />
-    
     <style>
         /* --- デザイン変数 --- */
         :root {
@@ -15,9 +12,11 @@
             --color-text: #1a1a1a;
             --color-accent: #c5a059; /* シャンパンゴールド */
             --color-border: #e0e0e0;
+            --color-alert: #d93025; /* 警告用赤色 */
             --font-main: "Shippori Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
             --header-h-pc: 100px;
             --header-h-sp: 80px;
+            --alert-h: 40px;
         }
 
         /* --- 基本リセット --- */
@@ -53,6 +52,31 @@
         .logo img { height: 70px; width: auto; display: block; }
         .logo-fallback { font-size: 1.3rem; font-weight: 600; letter-spacing: 0.1em; display: none; }
 
+        /* 注意喚起バー */
+        .alert-bar {
+            position: fixed;
+            top: var(--header-h-pc);
+            left: 0;
+            width: 100%;
+            height: var(--alert-h);
+            background: #fff5f5;
+            border-bottom: 1px solid #ffdada;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .alert-bar:hover { background: #ffebeb; }
+        .alert-bar p {
+            color: var(--color-alert);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .alert-bar p span { text-decoration: underline; margin-left: 5px; font-size: 0.7rem; opacity: 0.8; }
+
         .nav-menu { display: flex; gap: 25px; }
         .nav-link {
             cursor: pointer;
@@ -83,96 +107,63 @@
             position: relative;
         }
         .hamburger span {
-            display: block;
-            width: 100%;
-            height: 1px;
-            background-color: var(--color-text);
-            transition: all 0.4s ease;
+            display: block; width: 100%; height: 1px;
+            background-color: var(--color-text); transition: all 0.4s ease;
         }
         .hamburger.open span:nth-child(1) { transform: translateY(9.5px) rotate(45deg); }
         .hamburger.open span:nth-child(2) { opacity: 0; }
         .hamburger.open span:nth-child(3) { transform: translateY(-9.5px) rotate(-45deg); }
 
         .mobile-nav {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            height: 100vh;
-            background: #fff;
-            z-index: 1050;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            transition: right 0.5s ease;
+            position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+            background: #fff; z-index: 1050; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 30px; transition: right 0.5s ease;
         }
         .mobile-nav.open { right: 0; }
 
         @media (max-width: 900px) {
             header { height: var(--header-h-sp); }
+            .alert-bar { top: var(--header-h-sp); height: auto; padding: 8px 15px; }
+            .alert-bar p { font-size: 0.7rem; line-height: 1.4; text-align: center; }
             .logo img { height: 50px; }
             .nav-menu { display: none; }
             .hamburger { display: flex; }
             section { padding: 60px 5%; }
         }
 
-        /* --- ページ全体と表示制御 --- */
+        /* --- ページ表示制御 --- */
         .page { display: none; animation: fadeIn 0.8s ease forwards; }
         .page.active { display: block; }
         
-        /* トップ以外のページでヘッダーにタイトルが隠れないように調整 */
         .page:not(#page-index) {
-            padding-top: var(--header-h-pc);
+            padding-top: calc(var(--header-h-pc) + var(--alert-h));
         }
         @media (max-width: 900px) {
             .page:not(#page-index) {
-                padding-top: var(--header-h-sp);
+                padding-top: 130px; 
             }
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- スライダー共通設定 (Fade方式) --- */
+        /* --- スライダー共通設定 --- */
         .fade-slider-wrap {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            background: #eee;
-            touch-action: pan-y;
+            position: relative; width: 100%; overflow: hidden; background: #eee; touch-action: pan-y;
         }
         .fade-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1.2s ease-in-out;
-            z-index: 1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center; opacity: 0;
+            transition: opacity 1.2s ease-in-out; z-index: 1;
         }
         .fade-slide.active { opacity: 1; z-index: 2; }
 
-        /* ドットインジケーター */
         .slider-dots {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 30;
+            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 12px; z-index: 30;
         }
         .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
-            cursor: pointer;
-            transition: all 0.3s ease;
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4); cursor: pointer; transition: all 0.3s ease;
         }
         .dot.active { background: var(--color-accent); transform: scale(1.3); }
         .light-bg-dots .dot { background: rgba(0, 0, 0, 0.2); }
@@ -180,34 +171,21 @@
 
         /* ヒーローセクション配置 */
         .hero { 
-            height: 100vh; 
-            background-color: #000; 
-            display: flex !important;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
+            height: 100vh; background-color: #000; display: flex !important;
+            flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; position: relative;
         }
         .hero::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); z-index: 5; }
         .hero-content { 
-            position: relative; 
-            z-index: 10; 
-            color: #fff; 
-            width: 100%;
-            padding: 0 20px;
+            position: relative; z-index: 10; color: #fff; width: 100%; padding: 0 20px;
             margin-top: calc(var(--header-h-pc) / 2);
         }
         .hero-content h2 { 
-            font-size: clamp(1.5rem, 5vw, 2.8rem); 
-            font-weight: 500; 
-            line-height: 1.8; 
-            letter-spacing: 0.15em; 
-            margin-bottom: 3rem; 
-            text-shadow: 0 2px 20px rgba(0,0,0,0.6); 
+            font-size: clamp(1.5rem, 5vw, 2.8rem); font-weight: 500; line-height: 1.8; 
+            letter-spacing: 0.15em; margin-bottom: 3rem; text-shadow: 0 2px 20px rgba(0,0,0,0.6); 
         }
 
-        /* 高さ設定 */
+        /* 各種高さ設定 */
         .concept-img-wrapper { height: 550px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         .menu-slider-wrapper { height: 750px; max-width: 550px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .shop-slider-wrapper { height: 500px; max-width: 900px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
@@ -308,6 +286,11 @@
         </nav>
     </header>
 
+    <!-- 注意喚起バー -->
+    <div class="alert-bar" onclick="showPage('policy')">
+        <p>【重要】AutoReserve等の第三者予約サービスは当店では無効です。<span>詳細を見る</span></p>
+    </div>
+
     <!-- 1. トップページ -->
     <main id="page-index" class="page active">
         <section class="hero fade-slider-wrap" id="heroSlider" style="padding:0; max-width:100%;">
@@ -364,7 +347,6 @@
     <main id="page-menu" class="page">
         <section>
             <div class="section-header"><span>Selected Menu</span><h2>お品書き</h2></div>
-            
             <div style="max-width: 800px; margin: -20px auto 60px; text-align: center; padding: 0 20px;">
                 <p style="font-size: 1.05rem; color: #333; line-height: 2.2;">
                     厳選した新鮮和牛焼肉はもちろん、<br>
@@ -373,7 +355,6 @@
                     他では味わえない料理の数々が、食卓を彩ります。
                 </p>
             </div>
-
             <div class="menu-slider-wrapper fade-slider-wrap" id="menuSlider">
                 <div class="fade-slide active" style="background-image: url('assets/menu-1.jpg')"></div>
                 <div class="fade-slide" style="background-image: url('assets/menu-2.jpg')"></div>
@@ -395,7 +376,6 @@
     <main id="page-shop" class="page">
         <section>
             <div class="section-header"><span>Shop Introduction</span><h2>店舗紹介</h2></div>
-            
             <div style="max-width: 850px; margin: -20px auto 60px; text-align: center; padding: 0 20px;">
                 <p style="font-size: 1.05rem; color: #333; line-height: 2.2;">
                     店内にはテーブル席をはじめ、個室や掘りごたつ席をご用意。<br>
@@ -409,7 +389,6 @@
                     ※個室ご利用はご予約制です。
                 </p>
             </div>
-
             <div class="shop-slider-wrapper fade-slider-wrap" id="shopSlider">
                 <div class="fade-slide active" style="background-image: url('assets/shop-1.jpg')"></div>
                 <div class="fade-slide" style="background-image: url('assets/shop-2.jpg')"></div>
@@ -441,46 +420,15 @@
             <div class="access-grid">
                 <div style="margin-bottom: 40px;">
                     <table class="info-table">
-                        <tr>
-                            <th>ADDRESS<br><small>住所</small></th>
-                            <td>三重県鈴鹿市庄野共進1-4-8</td>
-                        </tr>
-                        <tr>
-                            <th>TEL<br><small>電話番号</small></th>
-                            <td><a href="tel:059-367-1129" style="display: flex; align-items: center;"><svg class="icon-phone" viewBox="0 0 24 24"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>059-367-1129</a></td>
-                        </tr>
-                        <tr>
-                            <th>HOURS<br><small>営業時間</small></th>
-                            <td>
-                                16:00 - 22:00 (L.O. 21:15)
-                                <small>※お客様の入店状況や品切れ状態により早く閉店させていただく場合がございます。</small>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>CLOSED<br><small>定休日</small></th>
-                            <td>
-                                月曜日・第1火曜日、第3火曜日<br>（祝日の場合も休み）
-                                <small>※その他都合により休ませていただく場合もございます。</small>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>PARKING<br><small>駐車場</small></th>
-                            <td>
-                                40台分の駐車スペースを完備しております。<br>
-                                <small>お車でも安心してご来店いただけます。</small>
-                            </td>
-                        </tr>
+                        <tr><th>ADDRESS<br><small>住所</small></th><td>三重県鈴鹿市庄野共進1-4-8</td></tr>
+                        <tr><th>TEL<br><small>電話番号</small></th><td><a href="tel:059-367-1129" style="display: flex; align-items: center;"><svg class="icon-phone" viewBox="0 0 24 24"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>059-367-1129</a></td></tr>
+                        <tr><th>HOURS<br><small>営業時間</small></th><td>16:00 - 22:00 (L.O. 21:15)<br><small>※状況により早く閉店する場合があります。</small></td></tr>
+                        <tr><th>CLOSED<br><small>定休日</small></th><td>月曜日・第1火曜日、第3火曜日（祝日の場合も休み）<br><small>※その他都合により休ませていただく場合もございます。</small></td></tr>
+                        <tr><th>PARKING<br><small>駐車場</small></th><td>40台分の駐車スペースを完備しております。<br><small>お車でも安心してご来店いただけます。</small></td></tr>
                     </table>
                 </div>
                 <div style="height: 400px; background: #f0f0f0;">
-                    <iframe 
-                        src="https://maps.google.com/maps?q=%E5%AE%B6%E6%97%8F%E4%BA%AD%20%E9%88%B4%E9%B9%BF%E5%BA%97&t=&z=17&ie=UTF8&iwloc=&output=embed" 
-                        width="100%" 
-                        height="100%" 
-                        style="border:0; filter: grayscale(1);" 
-                        allowfullscreen="" 
-                        loading="lazy">
-                    </iframe>
+                    <iframe src="https://maps.google.com/maps?q=%E5%AE%B6%E6%97%8F%E4%BA%AD%20%E9%88%B4%E9%B9%BF%E5%BA%97&t=&z=17&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0; filter: grayscale(1);" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </section>
@@ -492,8 +440,16 @@
             <div class="section-header"><span>Reservation</span><h2>ご予約・お問い合わせ</h2></div>
             <div class="phone-reservation-container">
                 <p class="phone-notes">ご予約・お問い合わせは営業時間内にお願い致します。尚、恐れ入りますが混雑時は電話に出られない場合がございます。<br>急な当日のご予約の変更・キャンセル等はお受け出来ませんのでご了承ください。</p>
+                
+                <!-- 注意事項ページへのボタンを電話番号の上に追加 -->
+                <div style="margin-bottom: 30px; text-align: center;">
+                    <div class="btn-elegant" onclick="showPage('policy')" style="color: var(--color-alert); border-color: var(--color-alert); padding: 12px 25px; font-size: 0.75rem;">
+                        ご予約注意事項を必ずご確認ください
+                    </div>
+                </div>
+
                 <div class="phone-number">
-                    <a href="tel:059-367-1129"><svg class="icon-phone" viewBox="0 0 24 24" style="width:35px; height:35px;"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>059-367-1129</a>
+                    <a href="tel:059-367-1129"><svg class="icon-phone" viewBox="0 0 24 24" style="width:35px; height:35px;"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>059-367-1129</a>
                 </div>
                 <div class="business-hours-info" style="margin-top: 30px;">
                     <p><strong>営業時間</strong></p>
@@ -502,6 +458,36 @@
                     <p style="margin-top: 20px;"><strong>定休日</strong></p>
                     <p>月曜日・第1火曜日、第3火曜日（祝日の場合も休み）</p>
                     <small>※その他都合により休ませていただく場合もございます。</small>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 6. ご予約注意事項ページ -->
+    <main id="page-policy" class="page">
+        <section>
+            <div class="section-header"><span>Reservation Policy</span><h2>ご予約注意事項</h2></div>
+            <div style="max-width: 800px; margin: 0 auto; line-height: 2.2; color: #333;">
+                <div style="margin-bottom: 50px; padding: 30px; background: #fffaf0; border: 1px solid #f0e6d2;">
+                    <p style="font-weight: 600; color: var(--color-alert); margin-bottom: 15px; font-size: 1.1rem;">① 第三者予約サービスについて</p>
+                    <p>
+                        当店は、AutoReserve等の第三者による無断掲載、ならびに誤った情報が含まれる可能性のある自動予約サービスとは一切提携しておらず、
+                        これらを通じたご予約は無効となり、一切の責任を負いかねます。
+                    </p>
+                    <p style="margin-top: 20px; font-weight: 600;">
+                        正規のご予約は、ご来店予定のお客様ご本人によるお電話（<a href="tel:059-367-1129" style="border-bottom: 1px solid;">059-367-1129</a>）での直接予約のみとなります。
+                    </p>
+                </div>
+                <div style="padding: 0 30px;">
+                    <p style="font-weight: 600; color: var(--color-accent); margin-bottom: 15px; font-size: 1.1rem;">② ご予約人数と異なる場合</p>
+                    <p>
+                        ご予約人数と異なる人数でご来店された場合、
+                        お席のご用意ができない、またはお席の移動をお願いする場合がございます。
+                        必ず事前にご連絡ください。
+                    </p>
+                </div>
+                <div style="margin-top: 80px; text-align: center;">
+                    <div class="btn-elegant" onclick="showPage('contact')" style="color: #000; border-color: #000;">ご予約・お問い合わせへ戻る</div>
                 </div>
             </div>
         </section>
@@ -523,29 +509,20 @@
     </footer>
 
     <script>
-        /**
-         * 改良版フェードスライダー
-         * @param {number} intervalTime - 0 を指定すると自動再生なし
-         */
         function initFadeSlider(sliderId, dotContainerId, captionContainerId, intervalTime) {
             const container = document.getElementById(sliderId);
             if(!container) return;
             const slides = container.querySelectorAll('.fade-slide');
             const dotContainer = document.getElementById(dotContainerId);
             const captions = captionContainerId ? document.getElementById(captionContainerId).querySelectorAll('.slide-caption') : null;
-            let current = 0;
-            let timer = null;
-
-            // ドット生成
+            let current = 0; let timer = null;
             slides.forEach((_, i) => {
                 const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (i === 0) dot.classList.add('active');
+                dot.classList.add('dot'); if (i === 0) dot.classList.add('active');
                 dot.addEventListener('click', () => goToSlide(i));
                 dotContainer.appendChild(dot);
             });
             const dots = dotContainer.querySelectorAll('.dot');
-
             function updateDisplay() {
                 slides.forEach((s, i) => {
                     s.classList.toggle('active', i === current);
@@ -553,37 +530,26 @@
                     if(captions && captions[i]) captions[i].classList.toggle('active', i === current);
                 });
             }
-
             function nextSlide() { current = (current + 1) % slides.length; updateDisplay(); }
             function prevSlide() { current = (current - 1 + slides.length) % slides.length; updateDisplay(); }
             function goToSlide(index) { current = index; updateDisplay(); resetTimer(); }
-            
-            function startTimer() { 
-                if (intervalTime > 0) {
-                    timer = setInterval(nextSlide, intervalTime); 
-                }
-            }
+            function startTimer() { if (intervalTime > 0) timer = setInterval(nextSlide, intervalTime); }
             function resetTimer() { clearInterval(timer); startTimer(); }
-
-            // スワイプ
             let touchStartX = 0;
             container.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
             container.addEventListener('touchend', e => {
                 const diff = touchStartX - e.changedTouches[0].clientX;
                 if (Math.abs(diff) > 50) { if (diff > 0) nextSlide(); else prevSlide(); resetTimer(); }
             }, { passive: true });
-
             startTimer();
         }
 
-        // ページ管理
         function showPage(id) {
             const nav = document.getElementById('mobileNav');
             if(nav && nav.classList.contains('open')) toggleMenu();
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const target = document.getElementById('page-' + id);
             if(target) target.classList.add('active');
-
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.toggle('active', link.getAttribute('onclick').includes(`'${id}'`));
             });
@@ -600,7 +566,7 @@
         window.onload = () => {
             initFadeSlider('heroSlider', 'heroDots', null, 4000);
             initFadeSlider('conceptSlider', 'conceptDots', null, 5000);
-            initFadeSlider('menuSlider', 'menuDots', null, 0); // お品書きはスワイプのみ (0を指定)
+            initFadeSlider('menuSlider', 'menuDots', null, 0); 
             initFadeSlider('shopSlider', 'shopDots', 'shopCaptions', 4500);
         };
     </script>
