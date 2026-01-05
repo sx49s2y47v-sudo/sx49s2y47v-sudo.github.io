@@ -200,6 +200,26 @@
             .concept-text p { text-align: center; font-size: 1rem; }
         }
 
+        /* 読みやすさ向上のための紹介文スタイル */
+        .intro-text-block {
+            max-width: 850px;
+            margin: -20px auto 60px;
+            text-align: center;
+            padding: 0 24px;
+        }
+        .intro-text-block .text-jp {
+            font-size: 1.05rem;
+            color: #333;
+            line-height: 2.6;
+            letter-spacing: 0.02em;
+        }
+        .intro-text-block .text-en {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 2.0;
+            margin-top: 30px;
+        }
+
         /* お知らせ一覧 */
         .news-item { border-bottom: 1px solid var(--color-border); padding: 25px 0; display: flex; gap: 30px; cursor: pointer; transition: 0.3s; }
         .news-item:hover { background: rgba(0,0,0,0.02); }
@@ -364,22 +384,23 @@
     <main id="page-menu" class="page">
         <section>
             <div class="section-header"><span>Selected Menu</span><h2 class="text-jp">お品書き</h2><h2 class="text-en">Our Menu</h2></div>
-            <div style="max-width: 800px; margin: -20px auto 60px; text-align: center; padding: 0 20px;">
-                <p class="text-jp" style="line-height: 2.5;">
+            
+            <div class="intro-text-block">
+                <div class="text-jp">
                     厳選した新鮮和牛焼肉はもちろん、<br>
-                    本場仕込みの韓国料理を豊富に取り揃えていることも、当店の強みです。<br><br>
+                    本場仕込みの韓国料理を豊富に<br class="mobile-only">取り揃えていることも、当店の強みです。<br><br>
                     キムチや冷麺、チゲ鍋、海鮮チヂミ、<br>
                     ピビン麺、ユッケジャン麺など、<br>
                     他では味わえない料理の数々が、食卓を彩ります。
-                </p>
-                <p class="text-en" style="line-height: 2.2;">
+                </div>
+                <div class="text-en">
                     Our strength lies in not only carefully selected fresh Wagyu<br>
                     but also a wide variety of authentic Korean dishes.<br><br>
-                    Our table is adorned with unique flavors such as<br>
-                    Kimchi, Naengmyeon, Jjigae, Seafood Pajeon,<br>
-                    Bibim-myeon, and Yukgaejang-myeon.
-                </p>
+                    Experience unique flavors such as Kimchi, Naengmyeon, Jjigae,<br>
+                    Seafood Pajeon, Bibim-myeon, and Yukgaejang-myeon.
+                </div>
             </div>
+
             <div class="menu-slider-wrapper fade-slider-wrap" id="menuSlider">
                 <div class="fade-slide active" style="background-image: url('assets/menu-1.jpg')"></div>
                 <div class="fade-slide" style="background-image: url('assets/menu-2.jpg')"></div>
@@ -404,27 +425,31 @@
     <main id="page-shop" class="page">
         <section>
             <div class="section-header"><span>Shop Introduction</span><h2 class="text-jp">店舗紹介</h2><h2 class="text-en">About Our Shop</h2></div>
-            <div style="max-width: 850px; margin: -20px auto 40px; text-align: center; padding: 0 20px;">
-                <p class="text-jp" style="line-height: 2.5;">
-                    店内にはテーブル席をはじめ、個室や掘りごたつ席をご用意。<br>
-                    足元にゆとりのある掘りごたつは、お年寄りの方にもやさしく、<br>
-                    ゆったりとくつろいでお食事をお楽しみいただけます。<br><br>
-                    個室も完備しており、<br>
-                    ご家族とのひとときから、ご宴会、カップルでのご利用まで、<br>
+            
+            <div class="intro-text-block">
+                <div class="text-jp">
+                    店内にはテーブル席をはじめ、<br class="mobile-only">
+                    個室や掘りごたつ席をご用意。<br><br>
+                    足元にゆとりのある掘りごたつは、<br class="mobile-only">
+                    お年寄りの方にもやさしく、<br>
+                    ゆったりとお食事をお楽しみいただけます。<br><br>
+                    個室も完備しており、ご家族とのひとときから、<br>
+                    ご宴会、カップルでのご利用まで、<br>
                     幅広いシーンに対応できる空間です。
-                </p>
-                <p class="text-en" style="line-height: 2.2;">
+                </div>
+                <div class="text-en">
                     We offer table seating, private rooms, and Horigotatsu.<br>
                     The Horigotatsu seats are elderly-friendly<br>
                     and allow you to relax comfortably.<br><br>
-                    Our private rooms are perfect for everything from<br>
+                    Our spaces are perfect for everything from<br>
                     family gatherings and banquets to romantic dates.
-                </p>
-                <p style="margin-top: 25px; color: var(--color-accent); font-size: 0.9rem; font-weight: 600;">
+                </div>
+                <p style="margin-top: 30px; color: var(--color-accent); font-size: 0.95rem; font-weight: 600;">
                     <span class="text-jp">※個室ご利用はご予約制です。</span>
                     <span class="text-en">*Private rooms require a reservation.</span>
                 </p>
             </div>
+
             <div class="shop-slider-wrapper fade-slider-wrap" id="shopSlider">
                 <div class="fade-slide active" style="background-image: url('assets/shop-1.jpg')"></div>
                 <div class="fade-slide" style="background-image: url('assets/shop-2.jpg')"></div>
@@ -442,10 +467,16 @@
                 <p class="slide-caption"><span class="text-jp">掘りごたつ（多人数用）</span><span class="text-en">Horigotatsu (Large)</span></p>
                 <p class="slide-caption"><span class="text-jp">掘りごたつ（少人数用）</span><span class="text-en">Horigotatsu (Small)</span></p>
             </div>
-            <div style="max-width: 800px; margin: 50px auto 0; text-align: center; padding: 0 20px;">
-                <p class="text-jp" style="line-height: 2.2; font-size: 1.1rem;">テーブル席・御座敷合わせて110席御用意致しております。<br><span style="font-size: 1rem;">（宴会最大32名様まで）</span></p>
-                <p class="text-en" style="line-height: 2.0;">We have a total of 110 seats including tables and tatami mats.<br><span style="font-size: 0.9rem;">(Up to 32 guests for banquets)</span></p>
-                <p style="margin-top: 30px; color: #888; font-size: 0.8rem;">
+            <div style="max-width: 800px; margin: 60px auto 0; text-align: center; padding: 0 24px;">
+                <p class="text-jp" style="line-height: 2.2; font-size: 1.1rem; border-top: 1px solid var(--color-border); padding-top: 40px;">
+                    テーブル席・御座敷合わせて<br class="mobile-only">110席御用意致しております。<br>
+                    <span style="font-size: 0.95rem; color: #666;">（宴会最大32名様まで）</span>
+                </p>
+                <p class="text-en" style="line-height: 1.8; margin-top: 15px;">
+                    We have a total of 110 seats including tables and tatami mats.<br>
+                    <span style="font-size: 0.85rem;">(Up to 32 guests for banquets)</span>
+                </p>
+                <p style="margin-top: 40px; color: #999; font-size: 0.8rem;">
                     <span class="text-jp">※お席のご利用は2時間までとさせていただいております。</span>
                     <span class="text-en">*Seating is limited to 2 hours.</span>
                 </p>
