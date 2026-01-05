@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO対策: タイトル設定 -->
-    <title>新羅会館 家族亭 鈴鹿店 | 鈴鹿市で本場炭火焼肉と韓国料理を楽しむ</title>
+    <title>新羅会館 家族亭 鈴鹿店 | 鈴鹿市で本場和牛焼肉と韓国料理を楽しむ</title>
     
     <!-- SEO対策: ディスクリプション -->
     <meta name="description" content="鈴鹿市で焼肉なら「新羅会館 家族亭 鈴鹿店」。厳選した和牛焼肉と、海鮮チヂミやユッケジャン麺など本場韓国料理を炭火で.個室・掘りごたつ完備でご宴会や家族団らんに最適。駐車場40台完備。">
@@ -13,13 +13,12 @@
     <!-- SEO対策: キーワード -->
     <meta name="keywords" content="鈴鹿市,焼肉,韓国料理,家族亭,和牛,炭火焼肉,個室,宴会">
 
-    <!-- SEO対策: 構造化データ (JSON-LD) -->
+    <!-- 構造化データ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Restaurant",
       "name": "新羅会館 家族亭 鈴鹿店",
-      "image": "https://your-domain.com/assets/shop-1.jpg",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "庄野共進1-4-8",
@@ -28,23 +27,8 @@
         "postalCode": "513-0833",
         "addressCountry": "JP"
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 34.87945,
-        "longitude": 136.56257
-      },
-      "url": "https://your-domain.com/",
       "telephone": "+81-59-367-1129",
-      "servesCuisine": ["Yakiniku", "Korean"],
-      "priceRange": "￥4,000 - ￥6,000",
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          "opens": "16:00",
-          "closes": "22:00"
-        }
-      ]
+      "servesCuisine": ["Yakiniku", "Korean"]
     }
     </script>
 
@@ -54,14 +38,20 @@
             --color-bg: #ffffff;
             --color-bg-alt: #fcfcfc;
             --color-text: #1a1a1a;
-            --color-accent: #c5a059; /* シャンパンゴールド */
+            --color-accent: #c5a059;
             --color-border: #e0e0e0;
-            --color-alert: #d93025; /* 警告用赤色 */
+            --color-alert: #d93025;
             --font-main: "Shippori Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
             --header-h-pc: 100px;
             --header-h-sp: 80px;
             --alert-h: 40px;
         }
+
+        /* --- 言語切り替えロジック --- */
+        .text-en { display: none; }
+        body.lang-en .text-jp { display: none; }
+        body.lang-en .text-en { display: inline; }
+        body.lang-en blockquote.text-en, body.lang-en div.text-en, body.lang-en p.text-en { display: block; }
 
         /* --- 基本リセット --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -78,275 +68,144 @@
 
         /* --- ヘッダー --- */
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 0 5%;
-            background: rgba(255, 255, 255, 0.98);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--color-border);
-            height: var(--header-h-pc);
+            position: fixed; top: 0; left: 0; width: 100%; padding: 0 5%;
+            background: rgba(255, 255, 255, 0.98); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--color-border); height: var(--header-h-pc);
         }
-
         .logo { display: flex; align-items: center; height: 100%; z-index: 1100; }
         .logo img { height: 70px; width: auto; display: block; }
         .logo-fallback { font-size: 1.3rem; font-weight: 600; letter-spacing: 0.1em; display: none; }
 
         /* 注意喚起バー */
         .alert-bar {
-            position: fixed;
-            top: var(--header-h-pc);
-            left: 0;
-            width: 100%;
-            height: var(--alert-h);
-            background: #fff5f5;
-            border-bottom: 1px solid #ffdada;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.3s;
+            position: fixed; top: var(--header-h-pc); left: 0; width: 100%; height: var(--alert-h);
+            background: #fff5f5; border-bottom: 1px solid #ffdada; z-index: 999;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
-        .alert-bar:hover { background: #ffebeb; }
-        .alert-bar p {
-            color: var(--color-alert);
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
-        .alert-bar p span { text-decoration: underline; margin-left: 5px; font-size: 0.7rem; opacity: 0.8; }
+        .alert-bar p { color: var(--color-alert); font-size: 0.8rem; font-weight: 600; }
+        .alert-bar span { text-decoration: underline; margin-left: 10px; font-size: 0.7rem; opacity: 0.8; }
 
-        .nav-menu { display: flex; gap: 25px; }
+        .nav-container { display: flex; align-items: center; gap: 30px; }
+        .nav-menu { display: flex; gap: 20px; }
         .nav-link {
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            padding: 5px 0;
+            cursor: pointer; display: flex; flex-direction: column; align-items: center; position: relative;
         }
-        .nav-link .en { font-size: 0.7rem; letter-spacing: 0.15em; font-weight: 500; line-height: 1; }
-        .nav-link .jp { font-size: 0.55rem; color: #999; margin-top: 4px; font-weight: 400; letter-spacing: 0.05em; }
-        .nav-link::after {
-            content: ""; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px;
-            background: var(--color-accent); transition: width 0.4s;
-        }
-        .nav-link.active::after, .nav-link:hover::after { width: 100%; }
-        .nav-link.active .jp { color: var(--color-accent); }
+        .nav-link .en { font-size: 0.7rem; letter-spacing: 0.1em; font-weight: 500; }
+        .nav-link .jp { font-size: 0.55rem; color: #999; margin-top: 2px; }
+        .nav-link.active::after { content: ""; position: absolute; bottom: -5px; width: 100%; height: 1px; background: var(--color-accent); }
 
-        /* ハンバーガーボタン (SPのみ) */
+        /* 言語切替ボタン */
+        .lang-switcher {
+            display: flex; gap: 10px; font-size: 0.7rem; border: 1px solid var(--color-border);
+            padding: 4px 10px; border-radius: 20px; cursor: pointer; transition: all 0.3s;
+        }
+        .lang-switcher span { opacity: 0.4; }
+        .lang-switcher span.active { opacity: 1; font-weight: bold; color: var(--color-accent); }
+
+        /* ハンバーガー */
         .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 20px;
-            cursor: pointer;
-            z-index: 1100;
-            position: relative;
+            display: none; flex-direction: column; justify-content: space-between;
+            width: 25px; height: 18px; cursor: pointer; z-index: 1100;
         }
-        .hamburger span {
-            display: block; width: 100%; height: 1px;
-            background-color: var(--color-text); transition: all 0.4s ease;
-        }
-        .hamburger.open span:nth-child(1) { transform: translateY(9.5px) rotate(45deg); }
+        .hamburger span { display: block; width: 100%; height: 1px; background-color: var(--color-text); transition: 0.4s; }
+        .hamburger.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
         .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-9.5px) rotate(-45deg); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
 
         .mobile-nav {
             position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
             background: #fff; z-index: 1050; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; gap: 30px; transition: right 0.5s ease;
+            justify-content: center; align-items: center; gap: 25px; transition: 0.5s ease;
         }
         .mobile-nav.open { right: 0; }
 
         @media (max-width: 900px) {
             header { height: var(--header-h-sp); }
-            .alert-bar { top: var(--header-h-sp); height: auto; padding: 8px 15px; }
-            .alert-bar p { font-size: 0.7rem; line-height: 1.4; text-align: center; }
-            .logo img { height: 50px; }
-            .nav-menu { display: none; }
+            .alert-bar { top: var(--header-h-sp); height: auto; padding: 10px; text-align: center; }
+            .alert-bar p { font-size: 0.7rem; }
+            .nav-menu, .header-lang { display: none; }
             .hamburger { display: flex; }
             section { padding: 60px 5%; }
         }
 
-        /* --- ページ全体と表示制御 --- */
+        /* --- ページ全体 --- */
         .page { display: none; animation: fadeIn 0.8s ease forwards; }
         .page.active { display: block; }
-        
-        .page:not(#page-index) {
-            padding-top: calc(var(--header-h-pc) + var(--alert-h));
-        }
-        @media (max-width: 900px) {
-            .page:not(#page-index) {
-                padding-top: 130px; 
-            }
-        }
+        .page:not(#page-index) { padding-top: calc(var(--header-h-pc) + var(--alert-h) + 40px); }
+        @media (max-width: 900px) { .page:not(#page-index) { padding-top: 150px; } }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- スライダー共通設定 (Fade方式) --- */
-        .fade-slider-wrap {
-            position: relative; width: 100%; overflow: hidden; background: #eee; touch-action: pan-y;
-        }
-        .fade-slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center; opacity: 0;
-            transition: opacity 1.2s ease-in-out; z-index: 1;
-        }
+        /* --- スライダー --- */
+        .fade-slider-wrap { position: relative; width: 100%; overflow: hidden; background: #eee; touch-action: pan-y; }
+        .fade-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: 1.2s; z-index: 1; }
         .fade-slide.active { opacity: 1; z-index: 2; }
-
-        .slider-dots {
-            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 12px; z-index: 30;
-        }
-        .dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4); cursor: pointer; transition: all 0.3s ease;
-        }
-        .dot.active { background: var(--color-accent); transform: scale(1.3); }
+        .slider-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 30; }
+        .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.4); cursor: pointer; }
+        .dot.active { background: var(--color-accent); transform: scale(1.2); }
         .light-bg-dots .dot { background: rgba(0, 0, 0, 0.2); }
         .light-bg-dots .dot.active { background: var(--color-accent); }
 
-        /* ヒーローセクション配置 */
-        .hero { 
-            height: 100vh; background-color: #000; display: flex !important;
-            flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; position: relative;
-        }
+        .hero { height: 100vh; background-color: #000; display: flex !important; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; }
         .hero::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); z-index: 5; }
-        .hero-content { 
-            position: relative; z-index: 10; color: #fff; width: 100%; padding: 0 20px;
-            margin-top: calc(var(--header-h-pc) / 2);
-        }
-        .hero-content h2 { 
-            font-size: clamp(1.5rem, 5vw, 2.8rem); font-weight: 500; line-height: 1.8; 
-            letter-spacing: 0.15em; margin-bottom: 3rem; text-shadow: 0 2px 20px rgba(0,0,0,0.6); 
-        }
+        .hero-content { position: relative; z-index: 10; color: #fff; margin-top: 50px; padding: 0 20px; }
+        .hero-content h2 { font-size: clamp(1.4rem, 5vw, 2.6rem); font-weight: 500; line-height: 1.8; text-shadow: 0 2px 20px rgba(0,0,0,0.6); }
 
-        /* 高さ設定 */
-        .concept-img-wrapper { height: 550px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .menu-slider-wrapper { height: 750px; max-width: 550px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .shop-slider-wrapper { height: 500px; max-width: 900px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-
+        .concept-img-wrapper { height: 500px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .menu-slider-wrapper { height: 700px; max-width: 500px; margin: 0 auto; }
+        .shop-slider-wrapper { height: 500px; max-width: 900px; margin: 0 auto; }
         @media (max-width: 900px) {
-            .concept-img-wrapper { height: 350px; width: 100%; }
+            .concept-img-wrapper { height: 350px; }
             .menu-slider-wrapper { height: 550px; width: 100%; }
             .shop-slider-wrapper { height: 300px; width: 100%; }
-            .hero-content { margin-top: calc(var(--header-h-sp) / 2); }
         }
 
-        .btn-elegant { 
-            display: inline-block; padding: 18px 45px; border: 1px solid rgba(255,255,255,0.9); color: #fff; 
-            font-size: 0.8rem; letter-spacing: 0.2em; transition: all 0.4s; cursor: pointer; background: transparent; 
-            text-align: center;
-        }
+        .btn-elegant { display: inline-block; padding: 15px 40px; border: 1px solid rgba(255,255,255,0.9); color: #fff; font-size: 0.75rem; letter-spacing: 0.2em; cursor: pointer; transition: 0.4s; }
         .btn-elegant:hover { background: #fff; color: #000; }
 
-        /* セクションタイトル */
-        .section-header { text-align: center; margin-bottom: 60px; }
-        .section-header span { 
-            display: block; font-size: 0.75rem; color: var(--color-accent); 
-            letter-spacing: 0.35em; margin-bottom: 15px; text-transform: uppercase; 
-        }
-        .section-header h2 { font-size: 1.8rem; font-weight: 400; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header span { display: block; font-size: 0.7rem; color: var(--color-accent); letter-spacing: 0.3em; margin-bottom: 10px; text-transform: uppercase; }
+        .section-header h2 { font-size: 1.6rem; font-weight: 400; }
 
-        .caption-area { text-align: center; margin-top: 20px; min-height: 1.5em; }
-        .slide-caption { font-size: 1rem; color: var(--color-text); font-weight: 500; display: none; }
-        .slide-caption.active { display: block; animation: fadeIn 0.5s ease; }
-
-        /* コンセプト (Philosophy) */
-        .concept-block { 
-            display: flex; align-items: center; justify-content: space-between; gap: 60px; max-width: 1200px; margin: 0 auto;
-        }
-        .concept-text { flex: 1.2; padding: 20px 0; }
-        .concept-text .section-header { text-align: left; margin-bottom: 40px; }
-        .concept-text p { font-size: 1.05rem; color: #333; text-align: justify; line-height: 2.2; }
+        /* コンセプト */
+        .concept-block { display: flex; align-items: center; justify-content: space-between; gap: 50px; max-width: 1200px; margin: 0 auto; }
+        .concept-text { flex: 1.2; }
+        .concept-text .section-header { text-align: left; margin-bottom: 30px; }
+        .concept-text p { font-size: 1rem; color: #333; text-align: justify; line-height: 2.2; }
         .concept-img-side { flex: 1; width: 100%; }
-
         @media (max-width: 900px) {
-            .concept-block { flex-direction: column; gap: 40px; text-align: center; }
-            .concept-text { flex: none; width: 100%; }
+            .concept-block { flex-direction: column; text-align: center; gap: 30px; }
             .concept-text .section-header { text-align: center; }
             .concept-text p { text-align: center; }
-            .concept-img-side { flex: none; width: 100%; }
         }
 
         /* お知らせ一覧 */
-        .news-item {
-            border-bottom: 1px solid var(--color-border);
-            padding: 25px 0;
-            display: flex;
-            gap: 30px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .news-item:hover { background: rgba(197, 160, 89, 0.03); }
-        .news-date { font-size: 0.8rem; color: var(--color-accent); flex-shrink: 0; width: 90px; }
-        .news-text { font-size: 0.9rem; line-height: 1.6; }
+        .news-item { border-bottom: 1px solid var(--color-border); padding: 20px 0; display: flex; gap: 20px; cursor: pointer; }
+        .news-date { font-size: 0.8rem; color: var(--color-accent); width: 100px; flex-shrink: 0; }
+        .news-text { font-size: 0.9rem; }
         .news-important { color: var(--color-alert); font-weight: 600; }
+        @media (max-width: 600px) { .news-item { flex-direction: column; gap: 5px; } }
 
-        @media (max-width: 600px) {
-            .news-item { flex-direction: column; gap: 5px; padding: 20px 0; }
-            .news-date { width: auto; }
-        }
-
-        /* 情報テーブル */
+        /* 店舗情報テーブル */
         .info-table { width: 100%; border-collapse: collapse; }
-        .info-table th { 
-            text-align: left; padding: 15px 15px 15px 0; border-bottom: 1px solid var(--color-border); 
-            color: var(--color-accent); font-size: 0.8rem; width: 125px; vertical-align: top; line-height: 1.5;
-        }
-        .info-table th small { display: block; font-size: 0.6rem; color: #999; margin-top: 2px; font-weight: 400; }
+        .info-table th { text-align: left; padding: 15px 0; border-bottom: 1px solid var(--color-border); color: var(--color-accent); font-size: 0.8rem; width: 130px; vertical-align: top; }
         .info-table td { padding: 15px 0; border-bottom: 1px solid var(--color-border); font-size: 0.9rem; }
-        .info-table td small { display: block; color: #777; margin-top: 5px; font-size: 0.75rem; line-height: 1.5; }
+        .info-table small { display: block; color: #777; font-size: 0.75rem; margin-top: 5px; }
+        .tel-cell-content { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .btn-policy-inline { color: var(--color-alert); border: 1px solid var(--color-alert); padding: 4px 12px; font-size: 0.65rem; cursor: pointer; }
+        @media (max-width: 600px) { .tel-cell-content { flex-direction: column; align-items: flex-start; gap: 8px; } .btn-policy-inline { width: 100%; text-align: center; } }
 
-        /* 電話番号セルの調整 */
-        .tel-cell-content {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .btn-policy-inline {
-            color: var(--color-alert); border: 1px solid var(--color-alert); padding: 6px 14px;
-            font-size: 0.7rem; cursor: pointer; transition: all 0.3s; display: inline-block;
-        }
-        .btn-policy-inline:hover { background: var(--color-alert); color: #fff; }
-
-        @media (max-width: 600px) {
-            .tel-cell-content {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            .btn-policy-inline {
-                width: 100%;
-                text-align: center;
-                padding: 10px;
-            }
-        }
-
-        .icon-phone { fill: var(--color-accent); width: 1.1em; height: 1.1em; margin-right: 10px; vertical-align: middle; }
-        .phone-reservation-container { text-align: center; max-width: 900px; margin: 0 auto; padding: 20px 0; }
-        .phone-notes { font-size: 0.9rem; color: #555; max-width: 800px; margin: 0 auto 30px; text-align: center; line-height: 2; padding: 0 15px; }
-        .phone-number { font-size: clamp(1.8rem, 8vw, 3.5rem); margin: 20px 0; display: flex; align-items: center; justify-content: center; }
-        .phone-number a { border-bottom: 2px solid var(--color-accent); display: flex; align-items: center; }
-        
-        .business-hours-info { display: inline-block; text-align: left; background: var(--color-bg-alt); padding: 30px 40px; border: 1px solid var(--color-border); }
+        .caption-area { text-align: center; margin-top: 15px; min-height: 1.5em; }
+        .slide-caption { font-size: 0.9rem; display: none; }
+        .slide-caption.active { display: block; }
 
         /* フッター */
         footer { background: var(--color-bg-alt); padding: 50px 5% 30px; border-top: 1px solid var(--color-border); text-align: center; }
-        .footer-logo { margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; }
-        .footer-logo img { height: 45px; width: auto; opacity: 0.9; margin-bottom: 10px; }
-        .footer-logo-fallback { font-size: 1.1rem; font-weight: 600; letter-spacing: 0.1em; color: var(--color-text); display: none; }
-        .footer-nav { display: flex; justify-content: center; gap: 15px; font-size: 0.7rem; flex-wrap: wrap; margin-bottom: 30px; }
-        .copyright { font-size: 0.65rem; color: #999; letter-spacing: 0.1em; }
+        .footer-logo { margin-bottom: 20px; }
+        .footer-logo img { height: 40px; }
+        .footer-nav { display: flex; justify-content: center; gap: 20px; font-size: 0.7rem; flex-wrap: wrap; margin-bottom: 20px; }
+        .copyright { font-size: 0.6rem; color: #999; letter-spacing: 0.1em; }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -354,33 +213,43 @@
 
     <header>
         <div class="logo">
-            <!-- SEO対策 -->
             <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;">鈴鹿市 焼肉 韓国料理 新羅会館 家族亭 鈴鹿店</h1>
             <img src="assets/家族亭logo.png" alt="新羅会館 家族亭 鈴鹿店" onerror="this.style.display='none'; document.getElementById('header-logo-text').style.display='block';">
             <span id="header-logo-text" class="logo-fallback">新羅会館 家族亭</span>
         </div>
-        <nav class="nav-menu">
-            <div class="nav-link active" onclick="showPage('index')"><span class="en">TOP</span><span class="jp">トップ</span></div>
-            <div class="nav-link" onclick="showPage('menu')"><span class="en">MENU</span><span class="jp">お品書き</span></div>
-            <div class="nav-link" onclick="showPage('shop')"><span class="en">SHOP</span><span class="jp">店舗紹介</span></div>
-            <div class="nav-link" onclick="showPage('access')"><span class="en">ACCESS</span><span class="jp">アクセス</span></div>
-            <div class="nav-link" onclick="showPage('contact')"><span class="en">RESERVE</span><span class="jp">ご予約</span></div>
-        </nav>
-        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-            <span></span><span></span><span></span>
+        <div class="nav-container">
+            <nav class="nav-menu">
+                <div class="nav-link active" onclick="showPage('index')"><span class="en">TOP</span><span class="jp">トップ</span></div>
+                <div class="nav-link" onclick="showPage('menu')"><span class="en">MENU</span><span class="jp">お品書き</span></div>
+                <div class="nav-link" onclick="showPage('shop')"><span class="en">SHOP</span><span class="jp">店舗紹介</span></div>
+                <div class="nav-link" onclick="showPage('access')"><span class="en">ACCESS</span><span class="jp">アクセス</span></div>
+                <div class="nav-link" onclick="showPage('contact')"><span class="en">RESERVE</span><span class="jp">ご予約</span></div>
+            </nav>
+            <!-- デスクトップ言語切替 -->
+            <div class="lang-switcher header-lang" onclick="toggleLanguage()">
+                <span id="lang-btn-jp" class="active">JP</span> / <span id="lang-btn-en">EN</span>
+            </div>
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
         </div>
         <nav class="mobile-nav" id="mobileNav">
             <div class="nav-link" onclick="showPage('index')"><span class="en">TOP</span><span class="jp">トップ</span></div>
             <div class="nav-link" onclick="showPage('menu')"><span class="en">MENU</span><span class="jp">お品書き</span></div>
             <div class="nav-link" onclick="showPage('shop')"><span class="en">SHOP</span><span class="jp">店舗紹介</span></div>
             <div class="nav-link" onclick="showPage('access')"><span class="en">ACCESS</span><span class="jp">アクセス</span></div>
-            <div class="nav-link" onclick="showPage('contact')"><span class="en">RESERVE</span><span class="jp">ご予約・お問い合わせ</span></div>
+            <div class="nav-link" onclick="showPage('contact')"><span class="en">RESERVE</span><span class="jp">ご予約</span></div>
+            <!-- モバイル言語切替 -->
+            <div class="lang-switcher" onclick="toggleLanguage()" style="margin-top: 20px;">
+                <span id="lang-btn-jp-m" class="active">JP</span> / <span id="lang-btn-en-m">EN</span>
+            </div>
         </nav>
     </header>
 
     <!-- 注意喚起バー -->
     <div class="alert-bar" onclick="showPage('policy')">
-        <p>【重要】AutoReserve等の第三者予約サービスは当店では無効です。<span>詳細を見る</span></p>
+        <p class="text-jp">【重要】AutoReserve等の第三者予約サービスは当店では無効です。<span>詳細を見る</span></p>
+        <p class="text-en">【Important】Third-party services like AutoReserve are NOT valid. <span>Read More</span></p>
     </div>
 
     <!-- 1. トップページ -->
@@ -389,10 +258,14 @@
             <div class="fade-slide active" style="background-image: url('assets/hero-1.jpg')"></div>
             <div class="fade-slide" style="background-image: url('assets/hero-2.jpg')"></div>
             <div class="fade-slide" style="background-image: url('assets/hero-3.jpg')"></div>
-            
             <div class="hero-content">
-                <h2>家族亭で味わう、<br>本場炭火焼肉と韓国料理。</h2>
-                <div class="btn-elegant" onclick="showPage('contact')">RESERVATION / CONTACT</div>
+                <!-- 修正箇所: 炭火 -> 和牛 -->
+                <h2 class="text-jp">家族亭で味わう、<br>本場和牛焼肉と韓国料理。</h2>
+                <h2 class="text-en">Authentic Yakiniku &<br>Korean Cuisine at Kazokutei.</h2>
+                <div class="btn-elegant" onclick="showPage('contact')">
+                    <span class="text-jp">ご予約・お問い合わせ</span>
+                    <span class="text-en">RESERVATION / CONTACT</span>
+                </div>
             </div>
             <div class="slider-dots" id="heroDots"></div>
         </section>
@@ -402,23 +275,24 @@
                 <div class="concept-text">
                     <div class="section-header">
                         <span>Our Philosophy</span>
-                        <h2>炭火がつなぐ、本場と和牛。</h2>
+                        <h2 class="text-jp">炭火がつなぐ、本場と和牛。</h2>
+                        <h2 class="text-en">Connecting Tradition with Wagyu.</h2>
                     </div>
-                    <p>
-                        新羅会館 家族亭がお届けするのは、<br>
-                        炭火で味わう和牛焼肉と、本場仕込みの韓国料理。<br><br>
-                        日本全国から選び抜いた上質な和牛を、<br>
-                        熟練の職人が肉質を見極め、一枚一枚丁寧に切り分けます。<br>
-                        力強い炭火と、秘伝のタレが引き出す、肉本来の旨みをご堪能ください。
+                    <p class="text-jp">
+                        新羅会館 家族亭がお届けするのは、炭火で味わう和牛焼肉と、本場仕込みの韓国料理。<br><br>
+                        日本全国から選び抜いた上質な和牛を、熟練の職人が肉質を見極め、一枚一枚丁寧に切り分けます。力強い炭火と、秘伝のタレが引き出す、肉本来の旨みをご堪能ください。
+                    </p>
+                    <p class="text-en">
+                        Kazokutei offers premium Wagyu beef grilled over authentic charcoal and traditional Korean dishes.<br><br>
+                        Our master chefs carefully select high-quality Wagyu from across Japan, hand-cutting each piece to perfection. Experience the true umami brought out by fierce charcoal heat and our secret sauces.
                     </p>
                 </div>
                 <div class="concept-img-side">
-                    <!-- 合計9枚のコンセプトスライダー -->
                     <div class="concept-img-wrapper fade-slider-wrap" id="conceptSlider">
-                        <div class="fade-slide active" style="background-image: url('assets/concept-1.jpg')" title="新羅会館 家族亭 こだわりの肉"></div>
-                        <div class="fade-slide" style="background-image: url('assets/concept-2.jpg')" title="職人の技"></div>
-                        <div class="fade-slide" style="background-image: url('assets/concept-3.jpg')" title="本場の韓国料理"></div>
-                        <div class="fade-slide" style="background-image: url('assets/concept-4.jpg')" title="炭火の魅力"></div>
+                        <div class="fade-slide active" style="background-image: url('assets/concept-1.jpg')"></div>
+                        <div class="fade-slide" style="background-image: url('assets/concept-2.jpg')"></div>
+                        <div class="fade-slide" style="background-image: url('assets/concept-3.jpg')"></div>
+                        <div class="fade-slide" style="background-image: url('assets/concept-4.jpg')"></div>
                         <div class="fade-slide" style="background-image: url('assets/concept-5.jpg')"></div>
                         <div class="fade-slide" style="background-image: url('assets/concept-6.jpg')"></div>
                         <div class="fade-slide" style="background-image: url('assets/concept-7.jpg')"></div>
@@ -430,17 +304,26 @@
             </div>
         </section>
 
-        <!-- お知らせセクション -->
         <section style="background-color: var(--color-bg-alt); max-width:100%;">
-            <div class="section-header"><span>Information</span><h2>最新のお知らせ</h2></div>
+            <div class="section-header">
+                <span>Information</span>
+                <h2 class="text-jp">最新のお知らせ</h2>
+                <h2 class="text-en">Latest News</h2>
+            </div>
             <div style="max-width: 800px; margin: 0 auto;">
                 <div class="news-item" onclick="showPage('policy')">
                     <span class="news-date">2026.01.05</span>
-                    <span class="news-text news-important">【重要】ご予約注意事項をご確認ください。</span>
+                    <span class="news-text news-important">
+                        <span class="text-jp">【重要】ご予約注意事項をご確認ください。</span>
+                        <span class="text-en">[Important] Please read our reservation policy.</span>
+                    </span>
                 </div>
                 <div class="news-item">
                     <span class="news-date">2026.01.01</span>
-                    <span class="news-text">新羅会館家族亭鈴鹿店 ホームページリニューアルしました。</span>
+                    <span class="news-text">
+                        <span class="text-jp">ホームページをリニューアルしました。</span>
+                        <span class="text-en">Our website has been renewed.</span>
+                    </span>
                 </div>
             </div>
         </section>
@@ -449,13 +332,17 @@
     <!-- 2. お品書き -->
     <main id="page-menu" class="page">
         <section>
-            <div class="section-header"><span>Selected Menu</span><h2>お品書き</h2></div>
+            <div class="section-header">
+                <span>Selected Menu</span>
+                <h2 class="text-jp">お品書き</h2>
+                <h2 class="text-en">Our Menu</h2>
+            </div>
             <div style="max-width: 800px; margin: -20px auto 60px; text-align: center; padding: 0 20px;">
-                <p style="font-size: 1.05rem; color: #333; line-height: 2.2;">
-                    厳選した新鮮和牛焼肉はもちろん、<br>
-                    本場仕込みの韓国料理を豊富に取り揃えていることも、当店の強みです。<br>
-                    キムチや冷麺、チゲ鍋、海鮮チヂミ、ピビン麺、ユッケジャン麺など、<br>
-                    他では味わえない料理の数々が、食卓を彩ります。
+                <p class="text-jp">
+                    厳選した新鮮和牛焼肉はもちろん、本場仕込みの韓国料理を豊富に取り揃えていることも、当店の強みです。キムチや冷麺、チゲ鍋、海鮮チヂミ、ピビン麺、ユッケジャン麺など、他では味わえない料理の数々が、食卓を彩ります。
+                </p>
+                <p class="text-en">
+                    Our strength lies in not only carefully selected fresh Wagyu but also a wide variety of authentic Korean dishes. Our table is adorned with unique flavors such as Kimchi, Naengmyeon, Jjigae, Seafood Pajeon, Bibim-myeon, and Yukgaejang-myeon.
                 </p>
             </div>
             <div class="menu-slider-wrapper fade-slider-wrap" id="menuSlider">
@@ -471,28 +358,33 @@
                 <div class="fade-slide" style="background-image: url('assets/menu-10.jpg')"></div>
                 <div class="slider-dots light-bg-dots" id="menuDots"></div>
             </div>
-            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: var(--color-accent);">〈 スワイプまたはドットで切り替え 〉</div>
+            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: var(--color-accent);">
+                <span class="text-jp">〈 スワイプまたはドットで切り替え 〉</span>
+                <span class="text-en">〈 Swipe or tap dots to switch 〉</span>
+            </div>
         </section>
     </main>
 
     <!-- 3. 店舗紹介 -->
     <main id="page-shop" class="page">
         <section>
-            <div class="section-header"><span>Shop Introduction</span><h2>店舗紹介</h2></div>
-            <div style="max-width: 850px; margin: -20px auto 60px; text-align: center; padding: 0 20px;">
-                <p style="font-size: 1.05rem; color: #333; line-height: 2.2;">
-                    店内にはテーブル席をはじめ、個室や掘りごたつ席をご用意。<br>
-                    足元にゆとりのある掘りごたつは、お年寄りの方にもやさしく、<br>
-                    ゆったりとくつろいでお食事をお楽しみいただけます。<br>
-                    個室も完備しており、<br>
-                    ご家族とのひとときから、ご宴会、カップルでのご利用まで、<br>
-                    幅広いシーンに対応できる空間です。
+            <div class="section-header">
+                <span>Shop Introduction</span>
+                <h2 class="text-jp">店舗紹介</h2>
+                <h2 class="text-en">About Our Shop</h2>
+            </div>
+            <div style="max-width: 850px; margin: -20px auto 40px; text-align: center; padding: 0 20px;">
+                <p class="text-jp">
+                    店内にはテーブル席をはじめ、個室や掘りごたつ席をご用意。足元にゆとりのある掘りごたつは、お年寄りの方にもやさしく、ゆったりとくつろいでお食事をお楽しみいただけます。個室も完備しており、ご家族とのひとときから、ご宴会、カップルでのご利用まで、幅広いシーンに対応できる空間です。
                 </p>
-                <p style="margin-top: 15px; color: var(--color-accent); font-size: 0.95rem; font-weight: 600;">
-                    ※個室ご利用はご予約制です。
+                <p class="text-en">
+                    We offer table seating, private rooms, and Horigotatsu (low tables with floor heaters). The Horigotatsu seats are elderly-friendly and allow you to relax comfortably. Our private rooms are perfect for everything from family gatherings and banquets to romantic dates.
+                </p>
+                <p style="margin-top: 15px; color: var(--color-accent); font-size: 0.9rem; font-weight: 600;">
+                    <span class="text-jp">※個室ご利用はご予約制です。</span>
+                    <span class="text-en">*Private rooms require a reservation.</span>
                 </p>
             </div>
-            <!-- スライダー部分 -->
             <div class="shop-slider-wrapper fade-slider-wrap" id="shopSlider">
                 <div class="fade-slide active" style="background-image: url('assets/shop-1.jpg')"></div>
                 <div class="fade-slide" style="background-image: url('assets/shop-2.jpg')"></div>
@@ -502,18 +394,21 @@
                 <div class="fade-slide" style="background-image: url('assets/shop-6.jpg')"></div>
                 <div class="slider-dots light-bg-dots" id="shopDots"></div>
             </div>
-            <!-- キャプション連動エリア -->
             <div class="caption-area" id="shopCaptions">
-                <p class="slide-caption active">外観1</p>
-                <p class="slide-caption">外観2</p>
-                <p class="slide-caption">テーブル席</p>
-                <p class="slide-caption">個室</p>
-                <p class="slide-caption">掘りごたつ（多人数用）</p>
-                <p class="slide-caption">掘りごたつ（少人数用）</p>
+                <p class="slide-caption active"><span class="text-jp">外観1</span><span class="text-en">Exterior 1</span></p>
+                <p class="slide-caption"><span class="text-jp">外観2</span><span class="text-en">Exterior 2</span></p>
+                <p class="slide-caption"><span class="text-jp">テーブル席</span><span class="text-en">Table Seating</span></p>
+                <p class="slide-caption"><span class="text-jp">個室空間</span><span class="text-en">Private Room</span></p>
+                <p class="slide-caption"><span class="text-jp">掘りごたつ</span><span class="text-en">Horigotatsu Seating</span></p>
+                <p class="slide-caption"><span class="text-jp">大人数用個室</span><span class="text-en">Large Private Room</span></p>
             </div>
-            <div style="max-width: 800px; margin: 60px auto 0; text-align: center;">
-                <p style="font-size: 1.1rem;">テーブル席・御座敷合わせて110席御用意致しております。<br>（宴会最大32名様まで）</p>
-                <p style="margin-top: 30px; color: #888; font-size: 0.85rem;">※お席のご利用は2時間までとさせていただいております。</p>
+            <div style="max-width: 800px; margin: 50px auto 0; text-align: center;">
+                <p class="text-jp">テーブル席・御座敷合わせて110席御用意致しております。<br>（宴会最大32名様まで）</p>
+                <p class="text-en">We have a total of 110 seats including tables and tatami mats.<br>(Up to 32 guests for banquets)</p>
+                <p style="margin-top: 20px; color: #888; font-size: 0.8rem;">
+                    <span class="text-jp">※お席のご利用は2時間までとさせていただいております。</span>
+                    <span class="text-en">*Seating is limited to 2 hours.</span>
+                </p>
             </div>
         </section>
     </main>
@@ -521,31 +416,60 @@
     <!-- 4. アクセス -->
     <main id="page-access" class="page">
         <section>
-            <div class="section-header"><span>Location</span><h2>アクセス</h2></div>
+            <div class="section-header">
+                <span>Location</span>
+                <h2 class="text-jp">アクセス</h2>
+                <h2 class="text-en">Access</h2>
+            </div>
             <div class="access-grid">
                 <div style="margin-bottom: 40px;">
                     <table class="info-table">
-                        <tr><th>ADDRESS<br><small>住所</small></th><td>三重県鈴鹿市庄野共進1-4-8</td></tr>
                         <tr>
-                            <th>TEL<br><small>電話番号</small></th>
+                            <th>ADDRESS<br><small><span class="text-jp">住所</span><span class="text-en">Address</span></small></th>
+                            <td><span class="text-jp">三重県鈴鹿市庄野共進1-4-8</span><span class="text-en">1-4-8 Shonokyoshin, Suzuka, Mie</span></td>
+                        </tr>
+                        <tr>
+                            <th>TEL<br><small><span class="text-jp">電話番号</span><span class="text-en">Phone</span></small></th>
                             <td>
                                 <div class="tel-cell-content">
-                                    <a href="tel:059-367-1129" style="display: flex; align-items: center;"><svg class="icon-phone" viewBox="0 0 24 24"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>059-367-1129</a>
-                                    <div class="btn-policy-inline" onclick="showPage('policy')">ご予約注意事項を確認</div>
+                                    <a href="tel:059-367-1129" style="display: flex; align-items: center;"><svg class="icon-phone" viewBox="0 0 24 24" style="width:1.2em; height:1.2em; fill:var(--color-accent); margin-right:8px;"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>059-367-1129</a>
+                                    <div class="btn-policy-inline" onclick="showPage('policy')">
+                                        <span class="text-jp">注意事項を確認</span><span class="text-en">Policy</span>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
-                        <tr><th>HOURS<br><small>営業時間</small></th><td>16:00 - 22:00 (L.O. 21:15)<br><small>※状況により早く閉店させていただく場合がございます。</small></td></tr>
-                        <tr><th>CLOSED<br><small>定休日</small></th><td>月曜日・第1火曜日、第3火曜日<br>（祝日の場合も休み）<br><small>※その他都合により休ませていただく場合もございます。</small></td></tr>
-                        <tr><th>PARKING<br><small>駐車場</small></th><td>40台分の駐車スペースを完備しております。<br><small>お車でも安心してご来店いただけます。</small></td></tr>
+                        <tr>
+                            <th>HOURS<br><small><span class="text-jp">営業時間</span><span class="text-en">Hours</span></small></th>
+                            <td>16:00 - 22:00 (L.O. 21:15)<br><small>
+                                <span class="text-jp">※状況により早く閉店させていただく場合がございます。</span>
+                                <span class="text-en">*We may close early depending on ingredient availability.</span>
+                            </small></td>
+                        </tr>
+                        <tr>
+                            <th>CLOSED<br><small><span class="text-jp">定休日</span><span class="text-en">Closed</span></small></th>
+                            <td>
+                                <span class="text-jp">月曜日・第1火曜日、第3火曜日（祝日も休み）</span>
+                                <span class="text-en">Mondays, 1st & 3rd Tuesdays (Closed on public holidays)</span>
+                            <br><small>
+                                <span class="text-jp">※その他都合により休ませていただく場合もございます。</span>
+                                <span class="text-en">*Subject to change depending on circumstances.</span>
+                            </small></td>
+                        </tr>
+                        <tr>
+                            <th>PARKING<br><small><span class="text-jp">駐車場</span><span class="text-en">Parking</span></small></th>
+                            <td>
+                                <span class="text-jp">40台分の駐車スペースを完備。お車でも安心してご来店いただけます。</span>
+                                <span class="text-en">Parking for 40 cars is available.</span>
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <div style="margin-bottom: 40px;">
-                    <!-- ピンアイコン付きの一文 -->
-                    <p style="font-size: 0.9rem; margin-bottom: 15px; color: #555; text-align: center;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="var(--color-accent)" style="vertical-align: text-bottom; margin-right: 4px;">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>イオンモール鈴鹿から交差点を渡ってすぐ、斜め向かいに位置しています（徒歩約3分）。
+                    <p style="font-size: 0.85rem; margin-bottom: 15px; color: #555; text-align: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="var(--color-accent)" style="vertical-align: text-bottom; margin-right: 4px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        <span class="text-jp">イオンモール鈴鹿から交差点を渡ってすぐ、斜め向かいに位置しています（徒歩約3分）。</span>
+                        <span class="text-en">Located diagonally across the street from Aeon Mall Suzuka (approx. 3 min walk).</span>
                     </p>
                     <div style="height: 400px; background: #f0f0f0;">
                         <iframe src="https://maps.google.com/maps?q=%E5%AE%B6%E6%97%8F%E4%BA%AD%20%E9%88%B4%E9%B9%BF%E5%BA%97&t=&z=17&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0; filter: grayscale(1);" allowfullscreen="" loading="lazy"></iframe>
@@ -558,43 +482,58 @@
     <!-- 5. 予約・お問い合わせ -->
     <main id="page-contact" class="page">
         <section>
-            <div class="section-header"><span>Reservation</span><h2>ご予約・お問い合わせ</h2></div>
+            <div class="section-header">
+                <span>Reservation</span>
+                <h2 class="text-jp">ご予約・お問い合わせ</h2>
+                <h2 class="text-en">Reservation / Contact</h2>
+            </div>
             <div class="phone-reservation-container">
-                <p class="phone-notes">ご予約・お問い合わせは営業時間内にお願い致します。尚、恐れ入りますが混雑時は電話に出られない場合がございます。<br>急な当日のご予約の変更・キャンセル等はお受け出来ませんのでご了承ください。</p>
+                <p class="phone-notes text-jp">ご予約・お問い合わせは営業時間内にお願い致します。尚、恐れ入りますが混雑時は電話に出られない場合がございます。急な当日のご予約の変更・キャンセル等はお受け出来ませんのでご了承ください。</p>
+                <p class="phone-notes text-en">Please contact us during business hours. We may not be able to answer during busy times. We do not accept last-minute changes or cancellations on the day of your visit.</p>
+                
                 <div style="margin-bottom: 30px; text-align: center;">
-                    <div class="btn-elegant" onclick="showPage('policy')" style="color: var(--color-alert); border-color: var(--color-alert); padding: 12px 25px; font-size: 0.75rem;">ご予約注意事項を必ずご確認ください</div>
+                    <div class="btn-elegant" onclick="showPage('policy')" style="color: var(--color-alert); border-color: var(--color-alert); padding: 12px 25px; font-size: 0.75rem;">
+                        <span class="text-jp">ご予約注意事項を必ずご確認ください</span>
+                        <span class="text-en">Please check our Reservation Policy</span>
+                    </div>
                 </div>
+
                 <div class="phone-number">
-                    <a href="tel:059-367-1129"><svg class="icon-phone" viewBox="0 0 24 24" style="width:35px; height:35px;"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>059-367-1129</a>
-                </div>
-                <div class="business-hours-info" style="margin-top: 30px;">
-                    <p><strong>営業時間</strong></p>
-                    <p>16:00 - 22:00 (L.O. 21:15)</p>
-                    <small>※お客様の入店状況や品切れ状態により早く閉店させていただく場合がございます。</small>
-                    <p style="margin-top: 20px;"><strong>定休日</strong></p>
-                    <p>月曜日・第1火曜日、第3火曜日（祝日の場合も休み）</p>
-                    <small>※その他都合により休ませていただく場合もございます。</small>
+                    <a href="tel:059-367-1129"><svg class="icon-phone" viewBox="0 0 24 24" style="width:35px; height:35px; fill:var(--color-accent); margin-right:15px;"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>059-367-1129</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- 6. ご予約注意事項ページ -->
+    <!-- 6. ご予約注意事項 -->
     <main id="page-policy" class="page">
         <section>
-            <div class="section-header"><span>Reservation Policy</span><h2>ご予約注意事項</h2></div>
+            <div class="section-header"><span>Reservation Policy</span><h2 class="text-jp">ご予約注意事項</h2><h2 class="text-en">Reservation Policy</h2></div>
             <div style="max-width: 800px; margin: 0 auto; line-height: 2.2; color: #333;">
                 <div style="margin-bottom: 50px; padding: 30px; background: #fffaf0; border: 1px solid #f0e6d2;">
-                    <p style="font-weight: 600; color: var(--color-alert); margin-bottom: 15px; font-size: 1.1rem;">① 第三者予約サービスについて</p>
-                    <p>当店は、AutoReserve等の第三者による無断掲載、ならびに誤った情報が含まれる可能性のある自動予約サービスとは一切提携しておらず、これらを通じたご予約は無効となり、一切の責任を負いかねます。</p>
-                    <p style="margin-top: 20px; font-weight: 600;">正規のご予約は、ご来店予定のお客様ご本人によるお電話（<a href="tel:059-367-1129" style="border-bottom: 1px solid;">059-367-1129</a>）での直接予約のみとなります。</p>
+                    <p style="font-weight: 600; color: var(--color-alert); margin-bottom: 15px; font-size: 1.1rem;">
+                        <span class="text-jp">① 第三者予約サービスについて</span>
+                        <span class="text-en">1. Regarding Third-party Services</span>
+                    </p>
+                    <p class="text-jp">当店は、AutoReserve等の第三者による無断掲載、ならびに誤った情報が含まれる可能性のある自動予約サービスとは一切提携しておらず、これらを通じたご予約は無効となり、一切の責任を負いかねます。</p>
+                    <p class="text-en">We are not affiliated with AutoReserve or any other third-party automated booking services. Reservations through such services are invalid, and we take no responsibility for them.</p>
+                    <p style="margin-top: 20px; font-weight: 600;">
+                        <span class="text-jp">正規のご予約は、お電話（059-367-1129）での直接予約のみとなります。</span>
+                        <span class="text-en">Official reservations can only be made by calling us directly at +81-59-367-1129.</span>
+                    </p>
                 </div>
                 <div style="padding: 0 30px;">
-                    <p style="font-weight: 600; color: var(--color-accent); margin-bottom: 15px; font-size: 1.1rem;">② ご予約人数と異なる場合</p>
-                    <p>ご予約人数と異なる人数でご来店された場合、お席のご用意ができない、またはお席の移動をお願いする場合がございます。必ず事前にご連絡ください。</p>
+                    <p style="font-weight: 600; color: var(--color-accent); margin-bottom: 15px; font-size: 1.1rem;">
+                        <span class="text-jp">② ご予約人数と異なる場合</span>
+                        <span class="text-en">2. Changes in Guest Count</span>
+                    </p>
+                    <p class="text-jp">ご予約人数と異なる人数でご来店された場合、お席のご用意ができない、またはお席の移動をお願いする場合がございます。必ず事前にご連絡ください。</p>
+                    <p class="text-en">If you arrive with a different number of guests than reserved, we may be unable to provide a seat or may ask you to move to another table. Please contact us in advance.</p>
                 </div>
-                <div style="margin-top: 80px; text-align: center;">
-                    <div class="btn-elegant" onclick="showPage('contact')" style="color: #000; border-color: #000;">ご予約・お問い合わせへ戻る</div>
+                <div style="margin-top: 60px; text-align: center;">
+                    <div class="btn-elegant" onclick="showPage('contact')" style="color: #000; border-color: #000;">
+                        <span class="text-jp">お問い合わせへ戻る</span><span class="text-en">Back to Contact</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -602,7 +541,7 @@
 
     <footer>
         <div class="footer-logo">
-            <img src="assets/家族亭logo.png" alt="新羅会館 家族亭 鈴鹿店" onerror="this.style.display='none'; document.getElementById('footer-logo-text-bottom').style.display='block';">
+            <img src="assets/家族亭logo.png" alt="家族亭" onerror="this.style.display='none'; document.getElementById('footer-logo-text-bottom').style.display='block';">
             <span id="footer-logo-text-bottom" class="footer-logo-fallback">新羅会館 家族亭</span>
         </div>
         <div class="footer-nav">
@@ -610,16 +549,25 @@
             <a href="#" onclick="showPage('menu')">MENU</a>
             <a href="#" onclick="showPage('shop')">SHOP</a>
             <a href="#" onclick="showPage('access')">ACCESS</a>
-            <a href="#" onclick="showPage('contact')">RESERVE / CONTACT</a>
+            <a href="#" onclick="showPage('contact')">RESERVE</a>
         </div>
         <div class="copyright">&copy; 2026 SHINRA-KAIKAN KAZOKUTEI SUZUKA.</div>
     </footer>
 
     <script>
-        /**
-         * 改良版フェードスライダー
-         * 同時スライド・キャプション連動機能を強化
-         */
+        // 言語切替
+        function toggleLanguage() {
+            const body = document.body;
+            body.classList.toggle('lang-en');
+            const isEn = body.classList.contains('lang-en');
+            
+            document.getElementById('lang-btn-jp').classList.toggle('active', !isEn);
+            document.getElementById('lang-btn-en').classList.toggle('active', isEn);
+            document.getElementById('lang-btn-jp-m').classList.toggle('active', !isEn);
+            document.getElementById('lang-btn-en-m').classList.toggle('active', isEn);
+        }
+
+        // スライダー初期化
         function initFadeSlider(sliderId, dotContainerId, captionContainerId, intervalTime) {
             const container = document.getElementById(sliderId);
             if(!container) return;
@@ -629,7 +577,6 @@
             
             let current = 0; let timer = null;
 
-            // ドット生成
             if (dotContainer && dotContainer.innerHTML === "") {
                 slides.forEach((_, i) => {
                     const dot = document.createElement('div');
@@ -644,19 +591,15 @@
                 slides.forEach((s, i) => {
                     s.classList.toggle('active', i === current);
                     if(dots && dots[i]) dots[i].classList.toggle('active', i === current);
-                    if(captions && captions[i]) {
-                        captions[i].classList.toggle('active', i === current);
-                    }
+                    if(captions && captions[i]) captions[i].classList.toggle('active', i === current);
                 });
             }
-
             function nextSlide() { current = (current + 1) % slides.length; updateDisplay(); }
             function prevSlide() { current = (current - 1 + slides.length) % slides.length; updateDisplay(); }
             function goToSlide(index) { current = index; updateDisplay(); resetTimer(); }
             function startTimer() { if (intervalTime > 0) timer = setInterval(nextSlide, intervalTime); }
             function resetTimer() { clearInterval(timer); startTimer(); }
 
-            // スワイプ処理
             let touchStartX = 0;
             container.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
             container.addEventListener('touchend', e => {
@@ -664,8 +607,7 @@
                 if (Math.abs(diff) > 50) { if (diff > 0) nextSlide(); else prevSlide(); resetTimer(); }
             }, { passive: true });
 
-            updateDisplay(); 
-            startTimer();
+            updateDisplay(); startTimer();
         }
 
         function showPage(id) {
