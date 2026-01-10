@@ -53,6 +53,12 @@
         body.lang-en .text-en { display: inline; }
         body.lang-en blockquote.text-en, body.lang-en div.text-en, body.lang-en p.text-en { display: block; }
 
+        /* スマホ専用改行の制御 */
+        .mobile-only { display: none; }
+        @media (max-width: 900px) {
+            .mobile-only { display: inline; }
+        }
+
         /* --- 基本リセット --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -89,20 +95,21 @@
         .alert-bar p { color: var(--color-alert); font-size: 0.8rem; font-weight: 600; }
         .alert-bar span { text-decoration: underline; margin-left: 10px; font-size: 0.7rem; opacity: 0.8; }
 
-        .nav-container { display: flex; align-items: center; gap: 30px; height: 100%; }
-        .nav-menu { display: flex; gap: 20px; }
+        .nav-container { display: flex; align-items: center; gap: 20px; height: 100%; }
+        .nav-menu { display: flex; gap: 15px; }
         .nav-link {
             cursor: pointer; display: flex; flex-direction: column; align-items: center; position: relative;
+            padding: 0 5px;
         }
-        .nav-link .en { font-size: 0.7rem; letter-spacing: 0.1em; font-weight: 500; }
-        .nav-link .jp { font-size: 0.55rem; color: #999; margin-top: 2px; }
+        .nav-link .en { font-size: 0.65rem; letter-spacing: 0.05em; font-weight: 500; }
+        .nav-link .jp { font-size: 0.5rem; color: #999; margin-top: 2px; }
         .nav-link.active::after { content: ""; position: absolute; bottom: -5px; width: 100%; height: 1px; background: var(--color-accent); }
 
         /* 言語切替ボタン */
         .lang-switcher {
-            display: flex; gap: 10px; font-size: 0.7rem; border: 1px solid var(--color-border);
-            padding: 4px 12px; border-radius: 20px; cursor: pointer; transition: all 0.3s;
-            background: #fff;
+            display: flex; gap: 8px; font-size: 0.65rem; border: 1px solid var(--color-border);
+            padding: 4px 10px; border-radius: 20px; cursor: pointer; transition: all 0.3s;
+            background: #fff; flex-shrink: 0;
         }
         .lang-switcher span { opacity: 0.4; transition: opacity 0.3s; }
         .lang-switcher span.active { opacity: 1; font-weight: bold; color: var(--color-accent); }
@@ -129,9 +136,14 @@
         .mobile-nav {
             position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
             background: #fff; z-index: 1050; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; gap: 30px; transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            justify-content: center; align-items: center; gap: 20px; transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
         }
         .mobile-nav.open { right: 0; }
+
+        @media (max-width: 1024px) {
+            .nav-menu { gap: 10px; }
+            .nav-link .en { font-size: 0.6rem; }
+        }
 
         @media (max-width: 900px) {
             header { height: var(--header-h-sp); padding: 0 4%; }
@@ -220,13 +232,61 @@
             margin-top: 30px;
         }
 
+        /* 名物料理ページのスタイル */
+        .specialty-list {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
+        }
+        .specialty-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .specialty-slider-container {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .specialty-img-wrap {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
+        }
+        .specialty-desc {
+            max-width: 700px;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .specialty-desc .text-jp {
+            font-size: 1.05rem;
+            line-height: 2.6;
+            color: #333;
+        }
+        .specialty-desc .text-en {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #666;
+            margin-top: 20px;
+            font-family: sans-serif;
+        }
+
+        @media (max-width: 600px) {
+            .specialty-list { gap: 70px; }
+            .specialty-slider-container { margin-bottom: 30px; }
+            .specialty-desc .text-jp { font-size: 1rem; line-height: 2.4; }
+        }
+
         /* お知らせ一覧 */
         .news-item { border-bottom: 1px solid var(--color-border); padding: 25px 0; display: flex; gap: 30px; cursor: pointer; transition: 0.3s; }
         .news-item:hover { background: rgba(0,0,0,0.02); }
         .news-date { font-size: 0.8rem; color: var(--color-accent); width: 100px; flex-shrink: 0; }
         .news-text { font-size: 0.9rem; flex: 1; }
         .news-important { color: var(--color-alert); font-weight: 600; }
-        @media (max-width: 600px) { .news-item { flex-direction: column; gap: 8px; padding: 20px 0; } }
 
         /* 店舗情報テーブル */
         .info-table { width: 100%; border-collapse: collapse; }
@@ -237,12 +297,6 @@
         .tel-cell-content { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
         .btn-policy-inline { color: var(--color-alert); border: 1px solid var(--color-alert); padding: 5px 12px; font-size: 0.65rem; cursor: pointer; transition: 0.3s; }
         .btn-policy-inline:hover { background: var(--color-alert); color: #fff; }
-        @media (max-width: 600px) { 
-            .info-table th { width: 110px; font-size: 0.75rem; }
-            .info-table td { font-size: 0.9rem; }
-            .tel-cell-content { flex-direction: column; align-items: flex-start; gap: 10px; } 
-            .btn-policy-inline { width: 100%; text-align: center; padding: 10px; } 
-        }
 
         .caption-area { text-align: center; margin-top: 15px; min-height: 1.5em; }
         .slide-caption { font-size: 0.95rem; display: none; color: #555; }
@@ -283,6 +337,7 @@
             <nav class="nav-menu">
                 <div class="nav-link active" onclick="showPage('index')"><span class="en">TOP</span><span class="jp">トップ</span></div>
                 <div class="nav-link" onclick="showPage('menu')"><span class="en">MENU</span><span class="jp">お品書き</span></div>
+                <div class="nav-link" onclick="showPage('specialty')"><span class="en">SPECIALTY</span><span class="jp">名物料理</span></div>
                 <div class="nav-link" onclick="showPage('shop')"><span class="en">SHOP</span><span class="jp">店舗紹介</span></div>
                 <div class="nav-link" onclick="showPage('access')"><span class="en">ACCESS</span><span class="jp">アクセス</span></div>
                 <div class="nav-link" onclick="showPage('contact')"><span class="en">RESERVE</span><span class="jp">ご予約</span></div>
@@ -297,6 +352,7 @@
         <nav class="mobile-nav" id="mobileNav">
             <div class="nav-link" onclick="showPage('index')"><span class="en">TOP</span><span class="jp">トップ</span></div>
             <div class="nav-link" onclick="showPage('menu')"><span class="en">MENU</span><span class="jp">お品書き</span></div>
+            <div class="nav-link" onclick="showPage('specialty')"><span class="en">SPECIALTY</span><span class="jp">名物料理</span></div>
             <div class="nav-link" onclick="showPage('shop')"><span class="en">SHOP</span><span class="jp">店舗紹介</span></div>
             <div class="nav-link" onclick="showPage('access')"><span class="en">ACCESS</span><span class="jp">アクセス</span></div>
             <div class="nav-link" onclick="showPage('contact')"><span class="en">RESERVE</span><span class="jp">ご予約</span></div>
@@ -336,13 +392,26 @@
                         <h2 class="text-jp">炭火がつなぐ、本場と和牛。</h2>
                         <h2 class="text-en">Connecting Tradition with Wagyu.</h2>
                     </div>
+                    <!-- スマホ向けに改行を調整 -->
                     <p class="text-jp">
-                        新羅会館 家族亭がお届けするのは、炭火で味わう和牛焼肉と、本場仕込みの韓国料理。<br><br>
-                        日本全国から選び抜いた上質な和牛を、熟練の職人が肉質を見極め、一枚一枚丁寧に切り分けます。力強い炭火と、秘伝のタレが引き出す、肉本来の旨みをご堪能ください。
+                        新羅会館 家族亭がお届けするのは、<br class="mobile-only">
+                        炭火で味わう和牛焼肉と、<br class="mobile-only">
+                        本場仕込みの韓国料理。<br><br>
+                        日本全国から選び抜いた上質な和牛を、<br class="mobile-only">
+                        熟練の職人が肉質を見極め、<br class="mobile-only">
+                        一枚一枚丁寧に切り分けます。<br><br>
+                        力強い炭火と、秘伝のタレが引き出す、<br class="mobile-only">
+                        肉本来の旨みをご堪能ください。
                     </p>
                     <p class="text-en">
-                        Kazokutei offers premium Wagyu beef grilled over authentic charcoal and traditional Korean dishes.<br><br>
-                        Our master chefs carefully select high-quality Wagyu from across Japan, hand-cutting each piece to perfection. Experience the true umami brought out by fierce charcoal heat and our secret sauces.
+                        Kazokutei offers premium Wagyu beef<br class="mobile-only">
+                        grilled over authentic charcoal<br class="mobile-only">
+                        and traditional Korean dishes.<br><br>
+                        Our master chefs carefully select<br class="mobile-only">
+                        high-quality Wagyu from across Japan,<br class="mobile-only">
+                        hand-cutting each piece to perfection.<br><br>
+                        Experience the true umami brought out by<br class="mobile-only">
+                        fierce charcoal heat and our secret sauces.
                     </p>
                 </div>
                 <div class="concept-img-side">
@@ -421,7 +490,117 @@
         </section>
     </main>
 
-    <!-- 3. 店舗紹介 -->
+    <!-- 3. 名物料理 -->
+    <main id="page-specialty" class="page">
+        <section>
+            <div class="section-header"><span>House Specialty</span><h2 class="text-jp">名物料理</h2><h2 class="text-en">House Specialty</h2></div>
+            
+            <div class="intro-text-block">
+                <div class="text-jp">
+                    厳選した和牛はもちろん、<br class="mobile-only">
+                    定番から通好みの一品まで、<br>
+                    サイドメニューも豊富に取り揃えています。
+                </div>
+                <div class="text-en">
+                    From carefully selected Wagyu to standard and gourmet side dishes, we offer a rich variety of options.
+                </div>
+            </div>
+
+            <div class="specialty-list">
+                <!-- キムチ -->
+                <div class="specialty-item">
+                    <div class="specialty-slider-container">
+                        <div class="specialty-img-wrap fade-slider-wrap" id="specialtySlider1">
+                            <div class="fade-slide active" style="background-image: url('assets/house-1.jpg')"></div>
+                            <div class="fade-slide" style="background-image: url('assets/house-2.jpg')"></div>
+                        </div>
+                        <div class="slider-dots light-bg-dots" id="specialtyDots1"></div>
+                    </div>
+                    <div class="specialty-desc">
+                        <div class="text-jp">
+                            たとえば、キムチ。<br>
+                            すっきりと澄んだ味わいの中に感じる、<br class="mobile-only">果実由来の自然な甘み。<br>
+                            そこへ重なる、あとを引く唐辛子の辛味。<br><br>
+                            焼肉に寄り添うことを前提に<br class="mobile-only">仕立てた手作りの味が、<br class="mobile-only">
+                            肉の旨みを引き立て、<br class="mobile-only">何倍にも美味しく感じさせます。
+                        </div>
+                        <div class="text-en">
+                            Our homemade Kimchi features a clear taste with natural sweetness from fruits, followed by a lingering spicy kick. It is crafted to perfectly complement our grilled meats and enhance their flavor.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- チヂミ -->
+                <div class="specialty-item">
+                    <div class="specialty-slider-container">
+                        <div class="specialty-img-wrap fade-slider-wrap" id="specialtySlider2">
+                            <div class="fade-slide active" style="background-image: url('assets/house-3.jpg')"></div>
+                            <div class="fade-slide" style="background-image: url('assets/house-4.jpg')"></div>
+                        </div>
+                        <div class="slider-dots light-bg-dots" id="specialtyDots2"></div>
+                    </div>
+                    <div class="specialty-desc">
+                        <div class="text-jp">
+                            たとえば、チヂミ。<br>
+                            香り高い出汁をきかせた生地を、<br>
+                            外はカリッと、中はもちっと。<br><br>
+                            一枚一枚、押して、回して、返す——<br>
+                            その工程を何度も繰り返し、<br class="mobile-only">丁寧に焼き上げています。
+                        </div>
+                        <div class="text-en">
+                            For example, our Chijimi. The batter, flavored with aromatic dashi, is crispy on the outside and chewy on the inside. Each one is carefully pressed, rotated, and flipped—a process repeated over and over for the perfect finish.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- イカフェ -->
+                <div class="specialty-item">
+                    <div class="specialty-slider-container">
+                        <div class="specialty-img-wrap fade-slider-wrap" id="specialtySlider3">
+                            <div class="fade-slide active" style="background-image: url('assets/house-5.jpg')"></div>
+                            <div class="fade-slide" style="background-image: url('assets/house-6.jpg')"></div>
+                        </div>
+                        <div class="slider-dots light-bg-dots" id="specialtyDots3"></div>
+                    </div>
+                    <div class="specialty-desc">
+                        <div class="text-jp">
+                            たとえば、イカフェ。<br>
+                            フェとは、刺身を甘酸っぱい<br class="mobile-only">唐辛子ダレで和える韓国料理。<br><br>
+                            シャキッとした野菜に、<br class="mobile-only">噛むほどに増すイカのねっとりとした甘み。<br>
+                            そこへ重なる、コリッと心地よい<br class="mobile-only">歯切れが余韻を残します。
+                        </div>
+                        <div class="text-en">
+                            Ika-fe is a traditional Korean dish of raw squid and crisp vegetables tossed in a sweet and sour spicy sauce. The sticky sweetness of the squid and the crunchy texture of the vegetables create a lasting impression.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 冷麺 -->
+                <div class="specialty-item">
+                    <div class="specialty-slider-container">
+                        <div class="specialty-img-wrap fade-slider-wrap" id="specialtySlider4">
+                            <div class="fade-slide active" style="background-image: url('assets/house-7.jpg')"></div>
+                            <div class="fade-slide" style="background-image: url('assets/house-8.jpg')"></div>
+                        </div>
+                        <div class="slider-dots light-bg-dots" id="specialtyDots4"></div>
+                    </div>
+                    <div class="specialty-desc">
+                        <div class="text-jp">
+                            たとえば、冷麺。<br>
+                            つるりとした喉越しと、<br class="mobile-only">しっかりとしたコシが特徴の一杯。<br><br>
+                            鶏ガラをベースにした、<br class="mobile-only">澄んだ味わいの冷やし出汁。<br>
+                            焼肉の余韻をすっと整える、<br class="mobile-only">最後の〆にふさわしい冷麺です。
+                        </div>
+                        <div class="text-en">
+                            Our Reimen (cold noodles) is the perfect finale. It features slippery, chewy noodles in a clear, chilled chicken-based broth that cleanses the palate after a rich meal of grilled meats.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 4. 店舗紹介 -->
     <main id="page-shop" class="page">
         <section>
             <div class="section-header"><span>Shop Introduction</span><h2 class="text-jp">店舗紹介</h2><h2 class="text-en">About Our Shop</h2></div>
@@ -484,7 +663,7 @@
         </section>
     </main>
 
-    <!-- 4. アクセス -->
+    <!-- 5. アクセス -->
     <main id="page-access" class="page">
         <section>
             <div class="section-header"><span>Location</span><h2 class="text-jp">アクセス</h2><h2 class="text-en">Access</h2></div>
@@ -556,7 +735,7 @@
         </section>
     </main>
 
-    <!-- 5. 予約・お問い合わせ -->
+    <!-- 6. 予約・お問い合わせ -->
     <main id="page-contact" class="page">
         <section>
             <div class="section-header"><span>Reservation</span><h2 class="text-jp">ご予約・お問い合わせ</h2><h2 class="text-en">Reservation / Contact</h2></div>
@@ -599,7 +778,7 @@
         </section>
     </main>
 
-    <!-- 6. ご予約注意事項 -->
+    <!-- 7. ご予約注意事項 -->
     <main id="page-policy" class="page">
         <section>
             <div class="section-header"><span>Reservation Policy</span><h2 class="text-jp">ご予約注意事項</h2><h2 class="text-en">Reservation Policy</h2></div>
@@ -641,6 +820,7 @@
         <div class="footer-nav">
             <a href="#" onclick="showPage('index')">TOP</a>
             <a href="#" onclick="showPage('menu')">MENU</a>
+            <a href="#" onclick="showPage('specialty')">SPECIALTY</a>
             <a href="#" onclick="showPage('shop')">SHOP</a>
             <a href="#" onclick="showPage('access')">ACCESS</a>
             <a href="#" onclick="showPage('contact')">RESERVE</a>
@@ -666,6 +846,7 @@
             const dotContainer = document.getElementById(dotContainerId);
             const captions = captionContainerId ? document.getElementById(captionContainerId).querySelectorAll('.slide-caption') : null;
             let current = 0; let timer = null;
+
             if (dotContainer && dotContainer.innerHTML === "") {
                 slides.forEach((_, i) => {
                     const dot = document.createElement('div');
@@ -675,6 +856,7 @@
                 });
             }
             const dots = dotContainer ? dotContainer.querySelectorAll('.dot') : null;
+
             function updateDisplay() {
                 slides.forEach((s, i) => {
                     s.classList.toggle('active', i === current);
@@ -721,6 +903,10 @@
             initFadeSlider('conceptSlider', 'conceptDots', null, 5000);
             initFadeSlider('menuSlider', 'menuDots', null, 0); 
             initFadeSlider('shopSlider', 'shopDots', 'shopCaptions', 4500);
+            initFadeSlider('specialtySlider1', 'specialtyDots1', null, 5000);
+            initFadeSlider('specialtySlider2', 'specialtyDots2', null, 5500);
+            initFadeSlider('specialtySlider3', 'specialtyDots3', null, 6000);
+            initFadeSlider('specialtySlider4', 'specialtyDots4', null, 6500);
         };
     </script>
 </body>
