@@ -8,7 +8,7 @@
     <title>新羅会館 家族亭 鈴鹿店 | 鈴鹿市で本場和牛焼肉と韓国料理を楽しむ</title>
     
     <!-- SEO対策: ディスクリプション -->
-    <meta name="description" content="鈴鹿市で焼肉なら「新羅会館 家族亭 鈴鹿店」。厳選した和牛焼肉と、海鮮チヂミやユッケジャン麺など本場韓国料理を炭火で.個室・掘りごたつ完備でご宴会や家族団らんに最適。駐車場40台完備。">
+    <meta name="description" content="鈴鹿市で焼肉なら「新羅会館 家族亭 鈴鹿店」。厳選した和牛焼肉と、海鮮チヂミやユッケジャン麺など本場韓国料理を炭火で.個室・掘りごたつ完備でご宴会や家族団らんに最適.駐車場40台完備。">
     
     <!-- SEO対策: キーワード -->
     <meta name="keywords" content="鈴鹿市,焼肉,韓国料理,家族亭,和牛,炭火焼肉,個室,宴会">
@@ -187,7 +187,7 @@
         .shop-slider-wrapper { height: 500px; max-width: 900px; margin: 0 auto; }
         
         @media (max-width: 900px) {
-            .concept-img-wrapper { height: 350px; }
+            .concept-img-wrapper { height: 400px; } /* スマホ向けに少し高さを出し、文章とのバランスを調整 */
             .menu-slider-wrapper { height: 550px; width: 100%; }
             .shop-slider-wrapper { height: 320px; width: 100%; }
         }
@@ -199,7 +199,7 @@
         .section-header span { display: block; font-size: 0.75rem; color: var(--color-accent); letter-spacing: 0.3em; margin-bottom: 12px; text-transform: uppercase; }
         .section-header h2 { font-size: 1.7rem; font-weight: 400; letter-spacing: 0.05em; }
 
-        /* コンセプトセクション */
+        /* コンセプトセクションのスマホバランス調整 */
         .concept-block { display: flex; align-items: center; justify-content: space-between; gap: 60px; max-width: 1200px; margin: 0 auto; }
         .concept-text { flex: 1.2; }
         .concept-text .section-header { text-align: left; margin-bottom: 30px; }
@@ -207,9 +207,10 @@
         .concept-img-side { flex: 1; width: 100%; }
         
         @media (max-width: 900px) {
-            .concept-block { flex-direction: column; text-align: center; gap: 40px; }
-            .concept-text .section-header { text-align: center; }
-            .concept-text p { text-align: center; font-size: 1rem; }
+            .concept-block { flex-direction: column; text-align: center; gap: 30px; }
+            .concept-text .section-header { text-align: center; margin-bottom: 25px; }
+            .concept-text p { text-align: center; font-size: 1rem; line-height: 2.6; }
+            .concept-img-side { margin-top: 20px; }
         }
 
         /* 読みやすさ向上のための紹介文スタイル */
@@ -247,14 +248,15 @@
         }
         .specialty-slider-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 600px;
             margin-bottom: 40px;
             position: relative;
         }
         .specialty-img-wrap {
             width: 100%;
             aspect-ratio: 16 / 10;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid var(--color-accent);
             position: relative;
         }
         .specialty-desc {
@@ -277,7 +279,7 @@
 
         @media (max-width: 600px) {
             .specialty-list { gap: 70px; }
-            .specialty-slider-container { margin-bottom: 30px; }
+            .specialty-slider-container { margin-bottom: 30px; max-width: 100%; }
             .specialty-desc .text-jp { font-size: 1rem; line-height: 2.4; }
         }
 
@@ -392,7 +394,7 @@
                         <h2 class="text-jp">炭火がつなぐ、本場と和牛。</h2>
                         <h2 class="text-en">Connecting Tradition with Wagyu.</h2>
                     </div>
-                    <!-- スマホ向けに改行を調整 -->
+                    <!-- スマホ向けに最適なバランスに調整 -->
                     <p class="text-jp">
                         新羅会館 家族亭がお届けするのは、<br class="mobile-only">
                         炭火で味わう和牛焼肉と、<br class="mobile-only">
@@ -461,6 +463,12 @@
                     キムチや冷麺、チゲ鍋、海鮮チヂミ、<br>
                     ピビン麺、ユッケジャン麺など、<br>
                     他では味わえない料理の数々が、食卓を彩ります。
+                </div>
+                <div style="margin-top: 40px;">
+                    <div class="btn-elegant" onclick="showPage('specialty')" style="color: var(--color-accent); border-color: var(--color-accent); padding: 8px 24px; font-size: 0.75rem; background: transparent;">
+                        <span class="text-jp" style="color: var(--color-accent);">名物料理</span>
+                        <span class="text-en" style="color: var(--color-accent);">House Specialty</span>
+                    </div>
                 </div>
                 <div class="text-en">
                     Our strength lies in not only carefully selected fresh Wagyu<br>
@@ -589,7 +597,8 @@
                             たとえば、冷麺。<br>
                             つるりとした喉越しと、<br class="mobile-only">しっかりとしたコシが特徴の一杯。<br><br>
                             鶏ガラをベースにした、<br class="mobile-only">澄んだ味わいの冷やし出汁。<br>
-                            焼肉の余韻をすっと整える、<br class="mobile-only">最後の〆にふさわしい冷麺です。
+                            焼肉の余韻をすっと整える、<br>
+                            最後の〆にふさわしい冷麺です。
                         </div>
                         <div class="text-en">
                             Our Reimen (cold noodles) is the perfect finale. It features slippery, chewy noodles in a clear, chilled chicken-based broth that cleanses the palate after a rich meal of grilled meats.
